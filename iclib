@@ -1,0 +1,17 @@
+# script starts here
+# run with makelib iclib name [test1.cpp test2.cpp ... testn.cpp]
+LIB=lib$1.a
+rm -rf *.o
+g++ -c -std=c++17 -ggdb3 -O0 -DHWNUM=\"$1\" cs150check.cpp
+
+shift
+args=("$@")
+ELEMENTS=${#args[@]}
+for ((i=0;i<ELEMENTS;i++)); do
+	g++ -c -std=c++17 -Wall -Wextra -ggdb3 -O0 ${args[${i}]}
+done
+
+echo ... creating lib $LIB ...
+ar crf $LIB *.o
+
+#end of script
